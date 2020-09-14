@@ -5,24 +5,80 @@
 
     <data>
         <variable
-            name="helloWorld"
-            type="String" />
+            name="viewModel"
+            type="com.celsoespinoza.creaappincomesexpenses.app.main.MainViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".app.MainActivity">
+        tools:context=".app.main.MainActivity">
 
         <TextView
+            android:id="@+id/m_total_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{helloWorld}"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text='@{String.format("S/ %.2f", viewModel.totalAmount)}'
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <EditText
+            android:id="@+id/m_text_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.incomeInput}"
+            android:hint="INGRESO"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guide_line"
+            app:layout_constraintTop_toBottomOf="@+id/m_total_amount"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GUARDAR"
+            android:onClick="@{() -> viewModel.recalculateTotal(true)}"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guide_line"
+            app:layout_constraintTop_toBottomOf="@+id/m_text_income"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/m_text_expenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.expenseInput}"
+            android:hint="EGRESO"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guide_line"
+            app:layout_constraintTop_toBottomOf="@+id/m_total_amount"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GUARDAR"
+            android:onClick="@{() -> viewModel.recalculateTotal(false)}"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guide_line"
+            app:layout_constraintTop_toBottomOf="@+id/m_text_expenses"
+            tools:ignore="HardcodedText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
